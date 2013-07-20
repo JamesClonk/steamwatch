@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <timestamp key="byDate" datePattern="yyyyMMdd"/>
+
+    <appender name="RootFileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>tmp/updater_${byDate}.log</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5t - %-5c{1}] %-5p - %m%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="RootConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <encoder>
+            <pattern>[%-5t - %-18c{1}] %-5p - %m%n</pattern>
+        </encoder>
+    </appender>
+        
+    <root>
+        <level value="info"/>
+        <appender-ref ref="RootFileAppender"/>
+        <appender-ref ref="RootConsoleAppender"/>
+    </root>
+    
+</configuration>

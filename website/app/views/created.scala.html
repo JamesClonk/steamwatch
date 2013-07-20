@@ -1,0 +1,19 @@
+@(data: (String,String,String))(implicit flash: Flash)
+
+@main("SteamWatch by JamesClonk", None) {
+        
+            <h1>Success!</h1>
+            
+            <p>
+            	@data._1 was created.<br/>
+            	You can log in now!
+            </p>
+            
+            <br/>
+            
+            <a href="/login">Login</a>
+            
+            <br/>
+            <br/>
+}
+    

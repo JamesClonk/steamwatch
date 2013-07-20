@@ -1,0 +1,69 @@
+@(wishlists: Wishlists, user: ch.jamesclonk.steamwatch.model.User)
+
+@main("SteamWatch by JamesClonk", Some(user)) {
+    	
+	@helper.form(action = routes.Application.saveData) {
+	
+		@if(user == None) { &nbsp; } else {
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<h2>Wishlists</h2>
+		</td><td>
+		<input type="submit" value="Save Settings" class="save" />
+		</td></tr></table>
+		}
+    	
+    	<div id="wishlist-tabs">
+    	
+	    	<ul>
+	    	@wishlists.wishlists.map { wishlist =>
+		        <li><a href="#wishlist-tabs-@wishlist.wishlistId">@wishlist.wishlistId</a></li>
+	    	}
+	    	</ul>
+	    	
+	    	@for(w <- (0 until wishlists.wishlists.size)) {
+	    		@defining(wishlists.wishlists(w)) { wishlist =>
+		    		<div id="wishlist-tabs-@wishlist.wishlistId">
+		    		<input type="hidden" name="wishlist[@w].wishlistId" value="@wishlist.wishlistId" class="wishlistId"/>
+		    		
+					@for(i <- (0 until wishlist.notifications.size)) {				
+						<div class="sales">
+				        <table>
+					        <tr><td align="left" valign="top">
+					        	<a href="@wishlist.notifications(i).storeLink">
+					        	<img alt="Serious Sam 3: BFE" src="@wishlist.notifications(i).logo" width="184px" />
+					        	</a>
+					        </td><td align="left" valign="middle">
+					        	<h3><a href="@wishlist.notifications(i).storeLink">@wishlist.notifications(i).appName</a></h3>
+					        	<p class="current">Current Price: @{wishlist.notifications(i).currentPrice.toDouble / 100.0d}&euro;</p>
+					        	<p class="initial">Initial Price: @{wishlist.notifications(i).createdPrice.toDouble / 100.0d}&euro;</p>
+					        </td></tr>
+				        </table>
+				        
+				        <p>
+							<label for="amount-@wishlist.wishlistId-@i">Notification @@ Sales Price Percentage %:</label>
+							<input type="text" name="wishlist[@w].notifications[@i].salesPercentage" value="@wishlist.notifications(i).salesPercentage" id="amount-@wishlist.wishlistId-@i" class="slider" />
+							<label for="check-@wishlist.wishlistId-@i">Notify?</label>
+							<input type="checkbox" name="wishlist[@w].notifications[@i].notifyFlag" id="check-@wishlist.wishlistId-@i" @if(wishlist.notifications(i).alertFlag) { checked="checked" }/>
+							<input type="hidden" value="@wishlist.notifications(i).salesPercentage" id="value-@wishlist.wishlistId-@i"/>
+							
+							<input type="hidden" name="wishlist[@w].notifications[@i].wishlistId" value="@wishlist.notifications(i).wishlistId"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].appId" value="@wishlist.notifications(i).appId"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].appName" value="@wishlist.notifications(i).appName"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].logo" value="@wishlist.notifications(i).logo"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].storeLink" value="@wishlist.notifications(i).storeLink"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].createdPrice" value="@wishlist.notifications(i).createdPrice"/>
+							<input type="hidden" name="wishlist[@w].notifications[@i].currentPrice" value="@wishlist.notifications(i).currentPrice"/>
+						</p>
+						<div id="slider-@wishlist.wishlistId-@i"></div>
+	  					<br/><br/>
+	  					</div>
+					} 
+					</div>
+	    		}
+	    	}
+		    
+		</div>
+
+    }
+}

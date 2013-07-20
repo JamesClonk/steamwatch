@@ -1,0 +1,93 @@
+@(title: String, user: Option[ch.jamesclonk.steamwatch.model.User])(content: Html)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/jquery-ui-1.9.2.min.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/jquery-ui-1.9.2.min.js")" type="text/javascript"></script>
+        
+        <script>
+	    $(function() {
+	        $( "#wishlist-tabs" ).tabs();
+	        
+	        $( "input[type=submit]" )
+	            .button({
+		            icons: {
+		                primary: "ui-icon-locked"
+		            }
+		        })
+	            .click(function( event ) {
+	                //event.preventDefault();
+            });
+            
+            $('li').each(function(index) {
+            	var wishlist = $(this).text();
+            	
+            	$('.sales').each(function(index) {
+				    var value = parseInt( $("#value-" + wishlist + "-" + index).val(), 10 );
+			        $( "#slider-" + wishlist + "-" + index ).slider({
+			            value: value,
+			            min: 10,
+			            max: 90,
+			            step: 5,
+			            slide: function( event, ui ) {
+			                $( "#amount-" + wishlist + "-" + index ).val( ui.value );
+			            }
+			        });
+			        $( "#amount-" + wishlist + "-" + index ).val( $( "#slider-" + wishlist + "-" + index ).slider( "value" ) );
+				});
+            });
+            
+            var value = parseInt( $("#value-defaultSalesPercentage").val(), 10 );
+	        $("#slider-defaultSalesPercentage").slider({
+	            value: value,
+	            min: 10,
+	            max: 90,
+	            step: 5,
+	            slide: function( event, ui ) {
+	                $("#amount-defaultSalesPercentage").val( ui.value );
+	            }
+	        });
+	        $("#amount-defaultSalesPercentage").val( $("#slider-defaultSalesPercentage").slider( "value" ) );
+	    });
+	    </script>
+    
+    </head>
+    <body bgcolor="#efefef">
+    
+    	<div class="content">
+    	
+			<table class="content" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+			<tr class="content" bgcolor="#ffffff">
+			<td class="content" align="left" valign="middle">
+			
+			<h1><a href="/">SteamWatch</a> by JamesClonk</h1>
+			<div class="account">
+				@if(user == None) { 
+					<a href="/create">Create Account</a>&nbsp;|&nbsp;<a href="/login">Login</a> 
+				} else { 
+					<a href="/settings">@user.get.email</a>&nbsp;|&nbsp;<a href="logout">Logout</a> 
+				}
+			</div>
+		    </td>
+		    </tr>
+		    </table>
+		    
+		    <table class="content" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+			<tr class="content" bgcolor="#ffffff">
+			<td class="content" align="left" valign="middle">
+    	
+    		@content
+    		
+    		</td>
+	        </tr>
+	        </table>
+	        
+    	</div>
+        
+    </body>
+</html>

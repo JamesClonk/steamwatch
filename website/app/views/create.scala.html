@@ -1,0 +1,37 @@
+@(form: Form[(String,String,String)])(implicit flash: Flash)
+
+@main("SteamWatch by JamesClonk", None) {
+        
+        @helper.form(routes.CreateAccount.create) {
+            
+            <h1>Create Account</h1>
+            
+            @form.globalError.map { error =>
+                <p class="error">
+                    @error.message
+                </p>
+            }
+            
+            @flash.get("error").map { message =>
+                <p class="success">
+                    @message
+                </p>
+            }
+            
+            <p>
+                <input type="email" name="email" placeholder="Email" id="email" value="@form("email").value">
+            </p>
+            <p>
+                <input type="password" name="password" id="password" placeholder="Password">
+            </p>
+            <p>
+                <input type="password" name="code" id="code" placeholder="Secret Code">
+            </p>
+            <p>
+                <input type="submit" id="createbutton" value="Create Account" />
+            </p>
+            
+        }
+            
+}
+    

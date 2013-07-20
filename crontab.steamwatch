@@ -1,0 +1,7 @@
+# daily crontab reload! ---- to replace the crontab with crontab.steamwatch in $HOME directory
+00 21 * * *  crontab /home/play/crontab.steamwatch 1>/dev/null 2>&1
+
+# #########################################################
+13 * * * *  . /home/play/.profile && cd /home/play/steamwatch/updater/ && /home/play/steamwatch/updater/run_updater.sh 1>/dev/null 2>&1
+
+

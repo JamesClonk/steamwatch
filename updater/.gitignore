@@ -1,0 +1,12 @@
+logs
+project/project
+project/target
+bin/
+target
+tmp
+log
+dist
+data/steamwatch_unittest*
+/*.iml
+/out
+/RUNNING_PID

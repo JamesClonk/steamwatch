@@ -1,0 +1,31 @@
+@(settings: Setting, user: ch.jamesclonk.steamwatch.model.User)(implicit flash: Flash)
+
+@main("SteamWatch by JamesClonk", Some(user)) {
+        
+        @helper.form(routes.Settings.saveData) {
+            
+            <h1>Account Settings</h1>
+            
+            <p>
+                <label for="amount-defaultSalesPercentage">Default Sales Price Percentage %:</label>
+				<input type="text" name="defaultSalesPercentage" value="@settings.defaultSalesPercentage" id="amount-defaultSalesPercentage" class="slider" />
+				<input type="hidden" value="@settings.defaultSalesPercentage" id="value-defaultSalesPercentage"/>
+				<div id="slider-defaultSalesPercentage"></div>
+            </p>
+            <p>
+                <input type="text" name="wishlist[0]" id="wishlist1" value="@if(settings.wishlists.size > 0) {@settings.wishlists(0)}">
+            </p>
+            <p>
+                <input type="text" name="wishlist[1]" id="wishlist2" value="@if(settings.wishlists.size > 1) {@settings.wishlists(1)}">
+            </p>
+            <p>
+                <input type="text" name="wishlist[2]" id="wishlist3" value="@if(settings.wishlists.size > 2) {@settings.wishlists(2)}">
+            </p>
+            <p>
+                <input type="submit" value="Save Settings" class="settings" />
+            </p>
+            
+        }
+            
+}
+    
